@@ -1,51 +1,44 @@
-// src/prescription/prescription.routes.js
-
-import { Router } from 'express'
+// src/routes/prescription.routes.js
+import { Router } from 'express';
 import {
-  createPrescription,
   getAllPrescriptions,
-  getPrescription,
-  updatePrescription,
-  deletePrescription
-} from './prescription.controller.js'
-import { isAdmin, validateJwt } from '../../middlewares/validate.jwt.js'
-import { prescriptionValidator } from '../../helpers/validators.js'
-
-const api = Router()
-
-// Crear una receta (solo Admins)
-api.post(
-  '/createPrescription',
-  [validateJwt, isAdmin, prescriptionValidator],
-  createPrescription
-)
-
-// Obtener todas las recetas (solo Admins)
-api.get(
-  '/getAllPrescriptions',
-  [validateJwt, isAdmin],
-  getAllPrescriptions
-)
-
-// Obtener una receta por ID (solo Admins)
-api.get(
-  '/getPrescription/id/:id',
-  [validateJwt, isAdmin],
-  getPrescription
-)
-
-// Actualizar una receta (solo Admins)
-api.put(
-  '/updatePrescription/:id',
-  [validateJwt, isAdmin, prescriptionValidator],
+  getPrescriptionsByPatient,
+  createPrescription,
+  getPrescriptionsByRole,
   updatePrescription
-)
+} from './prescription.controller.js';
+import { validateJwt, isAdmin } from '../../middlewares/validate.jwt.js';
 
-// Eliminar una receta (solo Admins)
-api.delete(
-  '/deletePrescription/:id',
-  [validateJwt, isAdmin],
-  deletePrescription
-)
+const router = Router();
 
-export default api
+router.get(
+  '/all',
+  [ validateJwt, isAdmin ],
+  getAllPrescriptions
+);
+
+router.get(
+  '/patient/:patientId',
+  [ validateJwt ],
+  getPrescriptionsByPatient
+);
+
+router.post(
+  '/create',
+  [ validateJwt ],
+  createPrescription
+);
+
+router.get(
+  '/getByRole',
+  [ validateJwt ],
+  getPrescriptionsByRole
+);
+
+router.put(
+  '/update/:id',
+  [ validateJwt],
+  updatePrescription
+);
+
+export default router;

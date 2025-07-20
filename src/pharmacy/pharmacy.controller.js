@@ -1,6 +1,20 @@
 //Pharmacy controller
 import Pharmacy from './pharmacy.model.js'
 
+export const listActiveMedicines = async (req, res) => {
+  try {
+    const medicines = await Pharmacy.find({ status: true });
+    return res.json(medicines);
+  } catch (error) {
+    console.error('Error listando medicamentos:', error);
+    return res.status(500).json({
+      success: false,
+      message: 'Error al obtener lista de medicamentos',
+      error: error.message
+    });
+  }
+};
+
 // Agregar un nuevo medicamento
 export const addMedicine = async (req, res) => {
   try {

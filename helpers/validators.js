@@ -186,14 +186,6 @@ export const updateMedicineValidator = [
 
 
 export const prescriptionValidator = [
-  // medicalHistory: requerido, debe ser ObjectId válido y existir en MedicalHistory
-  body('medicalHistory', 'medicalHistory es requerido')
-    .notEmpty()
-    .isMongoId()
-    .withMessage('medicalHistory debe ser un ID válido')
-    .bail()
-    .custom(existMedicalHistory),
-
   // doctor: requerido, debe ser ObjectId válido y existir en User
   body('doctor', 'Doctor es requerido')
     .notEmpty()

@@ -8,12 +8,19 @@ import {
   deleteMedicine,
   filterByProvider,
   filterByExpiration,
-  filterByLowStock
+  filterByLowStock,
+  listActiveMedicines           
 } from './pharmacy.controller.js'
 import { validateJwt, isAdmin } from '../../middlewares/validate.jwt.js'
 import { addMedicineValidator, updateMedicineValidator } from '../../helpers/validators.js'
 
 const api = Router()
+
+api.get(
+  '/list',
+  [ validateJwt ],
+  listActiveMedicines
+);
 
 // Crear medicamento (solo ADMIN)
 api.post(
